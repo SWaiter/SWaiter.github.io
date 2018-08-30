@@ -5,7 +5,7 @@ baseurl:
 url: https://SWaiter.github.io
 date_format: "ordinal"
 title: 码的世界
-subtitle: "打码改变人生"
+subtitle: "分享简单的快乐"
 description: "王闪的个人博客"
 keywords: code, Wang Shan, Swaiter
 timezone: Asia/Shanghai
@@ -17,7 +17,7 @@ side_bar_repo_limit: 5
 # ---------------- #
 author: Wang Shan
 organization: wangshan@yoozoo.com
-organization_url: http://www.zkh360.com
+organization_url: https://SWaiter.github.io
 github_username: SWaiter
 location: ShangHai, China
 email: 787324413@qq.com
@@ -98,8 +98,8 @@ gitment:
     owner: mzlogin
     repo: blog-comments
     oauth:
-        client_id: d2e1cbbd298958076462
-        client_secret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
+        client_id: 8318b75f3ca8a3170fed
+        client_secret: 31ecc84845afec969617435f0b83d71798135648
 # https://github.com/gitalk/gitalk#install
 gitalk:
     owner: mzlogin
