@@ -95,14 +95,14 @@ disqus:
     username: 
 # https://imsun.net/posts/gitment-introduction/
 gitment:
-    owner: swaiter
+    owner: SWaiter
     repo: blog-comments
     oauth:
         client_id: 8318b75f3ca8a3170fed
         client_secret: 31ecc84845afec969617435f0b83d71798135648
 # https://github.com/gitalk/gitalk#install
 gitalk:
-    owner: swaiter
+    owner: SWaiter
     repo: blog-comments
     clientID: 8318b75f3ca8a3170fed
     clientSecret: 31ecc84845afec969617435f0b83d71798135648
