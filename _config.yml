@@ -96,14 +96,14 @@ disqus:
 # https://imsun.net/posts/gitment-introduction/
 gitment:
     owner: SWaiter
-    repo: blog-comments
+    repo: SWaiter.github.io
     oauth:
         client_id: 8318b75f3ca8a3170fed
         client_secret: 31ecc84845afec969617435f0b83d71798135648
 # https://github.com/gitalk/gitalk#install
 gitalk:
     owner: SWaiter
-    repo: blog-comments
+    repo: SWaiter.github.io
     clientID: 8318b75f3ca8a3170fed
     clientSecret: 31ecc84845afec969617435f0b83d71798135648
 # 在使用其它评论组件时可点击显示 Disqus
