@@ -1,9 +1,9 @@
 ---
 layout: wiki
-title: Win/Linux 端口占用
+title: Win/Linux-端口占用
 categories: Linux
 description: 查看端口占用的方式
-keywords: Linux win port
+keywords: Linux, win, port
 ---
 ## Linux查看程序端口占用情况
 今天发现服务器上Tomcat 8080端口起不来，老提示端口已经被占用。
