@@ -6,14 +6,7 @@ description: 最好用的 Java IDE
 keywords: IDEA, Java
 ---
 
-
-
-
 快捷键基本与 [Android Studio](./android-studio/) 一致，这里重点记录解决遇到过的问题。
-
-
-
-
 ## Q&A
 
 ### 解决导入 Eclipse Maven 工程后无法读取 .xml 文件的问题
