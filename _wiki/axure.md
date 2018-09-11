@@ -1,13 +1,10 @@
 ---
-
 layout: wiki
 title: Axure
 categories: tools
 description: Axure RP 快捷键和使用技巧
 keywords: Axure RP
 ---
-
-
 ## 快捷键
 
 C --> Ctrl
@@ -43,5 +40,3 @@ Cmd --> Command
 | 上下居中 | C-M-m   |          |
 | 底部对齐 | C-M-b   |          |
 | 组合     | C-g     |          |
-
-
