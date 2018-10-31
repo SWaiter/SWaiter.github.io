@@ -65,10 +65,12 @@ hive> create external table test.163music(   //建立外表，选择的数据库
     LOCATION '/test/music/';    //这里location 选择的是hdfs的路径，比如我把我文件放在hdfs路径是/test/music/
 ```
 如果是内表的话，会默认url，内表和外表有一定的区别，对外表进行drop，其对应的文件保留。
+
 ###5.查看数据
 ```hql
 select * from test.163music limit 1;
 ```
+
 ###6.查看表结构
 ```hql
 desc test.163music;
