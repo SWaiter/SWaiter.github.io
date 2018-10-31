@@ -7,14 +7,41 @@ keywords: hive、table、db、join
 ---
 
 在实际后台服务开发中，RPC框架具有很大的优势，其中当前dubbo已经受到大家的关注和认可，现在开始进行手动码一个简单的RPC框架。
-### 项目背景
-假如项目背景为：
+### hive简介
 
-订单服务（开发者A负责）需要调用商品服务（开发者B负责），那么开发者B会和A约定调用API，以接口的形式提供给A。通常都是B把API上传到Maven私服，然后B开始写API的实现，A只需要引入API依赖进行开发即可。
+```bash
+hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供完整的sql查询功能，可以将sql语句转换为MapReduce任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。
+```
 
-![screenshot home](https://swaiter.github.io/images/posts/java/rpc-框架图.png)
+[官方地址](https://hive.apache.org/)
 
-### 动手实现RPC
+### Hive的基本操作
+#### 1.建数据库
+```hql
+CREATE DATABASE IF NOT EXISTS test
+COMMENT '添加对表的描述'
+```
+
+#### 2.上传文件至hdfs
+
+```bash
+# 把本地数据put到集群
+$hadoop fs -put /Users/mrlevo/Desktop/project/163music/music_data  /test/music/
+```
+#### 3.查看
+
+```bash
+
+# 其中hdfs上的数据是这样的,它会location到该路径下的所有文件
+$hadoop fs -ls /test/music/
+-rw-r--r--   1 mac supergroup    2827582 2017-07-07 15:03 /test/music/music_data
+
+# music_data里面的文件是这样的,这里把个人信息抹掉了
+$ hadoop fs -cat /test/music/music_data | more
+xxx|9|让音乐串起你我|云南省|文山壮族苗族自治州|75后|新浪微博|482|2002|326|http://music.163.com/#/user/fans?id=xx
+xx|8|None|云南省|曲靖市|75后|None|0|12|4|http://music.163.com/user/fans?id=xx
+xx|8|百年云烟只过眼，不为繁华易素心|贵州省|贵阳市|85后|None|1|22|1|http://music.163.com/user/fans?id=xx
+```
 
 首先项目框架如下图
 
