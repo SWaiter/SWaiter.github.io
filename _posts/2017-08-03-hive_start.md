@@ -1,233 +1,165 @@
 ---
 layout: post
-title: 一个 printf 引发的基础复习
-categories: CPlusPlus
-description: 通过汇编和图画，深入解析函数调用及 printf 相关的机制。
-keywords: printf, IEEE 表示法
+title: hive 基础
+categories: swaiter
+description: hive入门
+keywords: hive、table、db、join
 ---
 
-先看一下引发我追究一下 printf 和栈桢等相关知识的一段简单的程序：
+在实际后台服务开发中，RPC框架具有很大的优势，其中当前dubbo已经受到大家的关注和认可，现在开始进行手动码一个简单的RPC框架。
+### 项目背景
+假如项目背景为：
 
-```cpp
-#include <stdio.h>
+订单服务（开发者A负责）需要调用商品服务（开发者B负责），那么开发者B会和A约定调用API，以接口的形式提供给A。通常都是B把API上传到Maven私服，然后B开始写API的实现，A只需要引入API依赖进行开发即可。
 
-int main()
-{
-    printf("%d ", 8.0/5);
-    printf("%.2f", 8/5);
-    return 0;
+![screenshot home](https://swaiter.github.io/images/posts/java/rpc-框架图.png)
+
+### 动手实现RPC
+
+首先项目框架如下图
+
+![screenshot home](https://swaiter.github.io/images/posts/java/home.png)
+
+### 订单查询（service模块）
+直接调用rpc方法，获取productService实现对象，这个对象通过动态代理的方式获取，如果想了解动态代理和反射知识点，可以参考我的另外两个开源的源码地址
+
+[我的git地址 https://github.com/SWaiter/proxy.git](https://github.com/SWaiter/proxy.git)
+[我的git地址 https://github.com/SWaiter/reflect.git](https://github.com/SWaiter/reflect.git)
+
+rpc的实现在api模块中
+```java
+public class Main {
+    public static void main(String[] args) {
+        IProductService productService = (IProductService) com.yoozoo.api.Main.rpc(IProductService.class);
+        Product product = productService.queryById(1025);
+        System.out.println(product);
+    }
 }
 ```
 
-初看时，想当然了一下觉得输出就是`1 1.00`，后来编译出来运行一下，屏幕上却赫然是`-1717986918 1.60`。
+### 商品服务（api模块）
+1、首先是bean
 
-在脑中干想了良久，其时的疑惑主要有两点：
+```java
+   public class Product implements Serializable{
+       private long id;
+       private String name;
+       private double price;
+       //省去set、get 、tostring 方法
+       }
 
-1. 1.6 转换为整形怎么就变成了负数。
-
-1. 1 转换为浮点数怎么就变成了 1.60。
-
-现在看来当时的理解中存在着一个很大的误区，就是觉得 printf 是将参数根据格式化字符串进行强制类型转换之后再进行输出的，即编译器会自动将程序变换成如下模样：
-
-```cpp
-#include <stdio.h>
-
-int main()
-{
-    printf("%d ", (int)(8.0/5));
-    printf("%.2f", (float)(8/5));
-    return 0;
+```
+2、定义查询接口
+```java
+public interface IProductService {
+    public Product queryById(long id);
 }
 ```
+3、接口实现
 
-但是第一段程序的输出已经打脸了，那么想想办法找找合理的解释。
-
-### 分析
-
-面对这类问题，现象诡异程序简单，能想到的最有效的方法之一就是看汇编。
-
-使用`g++ -S`编译出第一段程序的汇编如下：
-
-```asm
-	.file	"demo.cpp"
-	.def	___main;	.scl	2;	.type	32;	.endef
-	.section .rdata,"dr"
-LC1:
-	.ascii "%d \0"
-LC2:
-	.ascii "%.2f\0"
-	.text
-	.globl	_main
-	.def	_main;	.scl	2;	.type	32;	.endef
-_main:
-	pushl	%ebp
-	movl	%esp, %ebp
-	andl	$-16, %esp
-	subl	$16, %esp
-	call	___main
-	fldl	LC0
-	fstpl	4(%esp)
-	movl	$LC1, (%esp)
-	call	_printf
-	movl	$1, 4(%esp)
-	movl	$LC2, (%esp)
-	call	_printf
-	movl	$0, %eax
-	leave
-	ret
-	.section .rdata,"dr"
-	.align 8
-LC0:
-	.long	-1717986918
-	.long	1073322393
-	.ident	"GCC: (GNU) 4.9.1"
-	.def	_printf;	.scl	2;	.type	32;	.endef
-```
-
-#### 第一个 printf 结果的解释
-
-一眼望去，有没有发现一个熟悉的数？没错，我们程序的第一个输出 -1717986918 赫然在目。由此产生的猜想：
-
-**LC0 对应的两个。long 合起来是 double 类型的 8.0/5，而对其低位 4 字节进行截取后对应的整数为 -1717986918。**
-
-来把相关的数转换成二进制验证一下（IEEE 浮点数表示法相关知识见[附：IEEE 754 浮点数表示法](#ieee-754)）：
-
--1717986918 转换成十六进制为 -0x66666666，对应的二进制为：
-
-```
-1110 0110 0110 0110 0110 0110 0110
-```
-
-因为负数在内存中使用补码存储，故将如上二进制转换为补码才是它在内存中的样子：
-
-```
-1001 1001 1001 1001 1001 1001 1010
-```
-
-1073322393 转换成十六进制为 0x3ff99999，对应的二进制为：
-
-```
-0011 1111 1111 1001 1001 1001 1001
-```
-
-将这两个数合起来，1073322393 作为高位就是：
-
-```
-0011 1111 1111 1001 1001 1001 1001 1001 1001 1001 1001 1001 1001 1001 1010
-```
-
-转换成浮点数恰恰就是 1.6000000000000001，可以认为与 8.0/5 的结果相符。所以第一个 printf 输出结果的推论：
-
-1. 给 printf 传递的是参数的原始类型，而不是根据格式化字符串进行强制转换后的类型。
-
-   比如`printf("%d ", 8.0/5);`就会传 double 类型的 8.0/5，而不是根据 %d 强制转换成整型后再传参。
-
-1. printf 在根据格式化字符串组成输出的时候，会直接在对应参数的起始地址读取一个格式指定的类型出来。
-
-   比如`printf("%d ", 8.0/5);`就会在 double 类型的 8.0/5 的位置读取一个整型数出来，而小端模式下是高位高地址，低位低地址，所以这里是将 double 的低位 4 字节按 int 类型读取。
-
-   ```
-   +--------------+
-   |  double low  | --> 把低位 4 字节当作 int 读取
-   +--------------+
-   |  double high |
-   +--------------+
-   ```
-
-#### 第二次 printf 结果的解释
-
-在上面的汇编代码中对第二次 printf 的调用部分如下：
-
-```asm
-	movl	$1, 4(%esp)
-	movl	$LC2, (%esp)
-	call	_printf
-```
-
-可以看到传参确实传的整数 1 进去的，但是输出就变成了 1.60，结合我们对第一个输出的推论，则是会在整型 1 的位置读取一个 double 类型的数，并将内存中的整型 1 作为 double 的低位部分。为什么这里偏偏这么巧会是 1.60 而不是其它的什么值呢？结合上一次调用 printf 时传的参是 8.0/5 的情况，猜想：
-
-**受上一次调用后栈上残留数据的影响。**
-
-即：
-
-```
-+--------------+
-|     int      | -+----> 把这 8 字节当 double 读取
-+--------------+  |
-|residual data | -+
-+--------------+
-```
-
-于是将第一次调用的传参修改一下将残留数据变化一下，即：
-
-```c
-#include <stdio.h>
-
-int main()
-{
-    printf("%d ", 9.0/5);
-    printf("%.2f", 8/5);
-    return 0;
+```java
+public class ProductService implements IProductService{
+    @Override
+    public Product queryById(long id) {
+        Product product = new Product();
+        product.setId(id);
+        product.setName("wangshan");
+        product.setPrice(12211.2125);
+        return product;
+    }
 }
 ```
+4、rpc方法实现
+```java
+public static Object rpc(final Class iProductServiceClass) {
+        return Proxy.newProxyInstance(iProductServiceClass.getClassLoader(), new Class[]{iProductServiceClass}, new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                Socket socket = new Socket("127.0.0.1", 19088);
 
-果然如预料第二个 printf 的输出变成了 1.80。这又一次印证了对第一个输出分析后的两个结论。来复习一下基础，引自《深入理解计算机系统》里的一段话：
+                String apiClassName = iProductServiceClass.getName();
+                String methodName = method.getName();
+                Class[] parameterTypes = method.getParameterTypes();
 
-> 假设过程 P（调用者）调用过程 Q（被调用者），则 Q 的参数放在 P 的栈帧中。
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                objectOutputStream.writeUTF(apiClassName);
+                objectOutputStream.writeUTF(methodName);
+                objectOutputStream.writeObject(parameterTypes);
+                objectOutputStream.writeObject(args);
+                objectOutputStream.flush();
 
-即 printf 的参数是放在 main 函数的栈帧中的，那么两次调用`call _printf`前的堆栈情况应该是这样的：
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                Object o = objectInputStream.readObject();
+                objectInputStream.close();
+                objectOutputStream.close();
 
-
-```
-+-------------+                    +-------------+
-|             |        ...         |             |
-+-------------+                    +-------------+
-|             |                    |             |
-+-------------+                    +-------------+
-| format str1 | <-- esp            | format str2 | <-- esp
-+-------------+                    +-------------+
-| double low  |                    |     int     |
-+-------------+                    +-------------+
-| double high |                    | double high |
-+-------------+  main stack frame  +-------------+
-|     ...     |                    |     ...     |
-+-------------+                    +-------------+
-|             |                    |             |
-+-------------+                    +-------------+
-|   (%ebp)    | <-- ebp            |   (%ebp)    | <-- ebp
-+-------------+                    +-------------+
-```
-
-这里面补充的关键知识点：
-
-* 被调用函数的参数存放在调用函数的栈帧中。
-
-### IEEE-754
+                socket.close();
+                return o;
+            }
+        });
+    }
 
 ```
-+---+-----+----------+
-| S | Exp | Mantissa |
-+---+-----+----------+
+5、rpc启动
+
+```java
+public static void main(String[] args) {
+            try {
+                ServerSocket serverSocket = new ServerSocket(19088);
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+    
+                    String apiClassName = objectInputStream.readUTF();
+                    String methodName = objectInputStream.readUTF();
+                    Class[] parameterTypes = (Class[]) objectInputStream.readObject();
+                    Object[] args4method = (Object[]) objectInputStream.readObject();
+    
+                    Class clazz = null;
+    
+                    if (apiClassName.equals(IProductService.class.getName())) {
+                        clazz = ProductService.class;
+                    }
+                    Method method = clazz.getMethod(methodName, parameterTypes);
+                    Object invoke = method.invoke(clazz.newInstance(), args4method);
+    
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    objectOutputStream.writeObject(invoke);
+                    objectOutputStream.flush();
+    
+                    objectInputStream.close();
+                    objectOutputStream.close();
+                    socket.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 ```
 
-S：符号位
+### 启动
+1、首先启动api中的service中的Main.main方法  
+2、然后启动service中的Main.main方法  
+3、就可以获取服务对象
+```bash
+com.intellij.rt.execution.application.AppMain com.yoozoo.service.Main
+Product{id=1025, name='wangshan', price=12211.2125}
+Process finished with exit code 0
+```
 
-Exp：指数偏差
+###项目地址
 
-Mantissa：尾数
+```bash
+https://github.com/SWaiter/RPC.git
+```
 
-* 单精度（32 位）
+[我的git地址 https://github.com/SWaiter/RPC.git](https://github.com/SWaiter/RPC.git)
 
-  S：1 位
 
-  Exp：8 位，二进制科学计数法中的指数加 127（2^(8-1)-1）
+###总结
 
-  Mantissa：23 位，二进制科学计数法中的小数部分
-
-* 双精度（64 位）
-
-  S：1 位
-
-  Exp：11 位，二进制科学计数法中的指数加 1023（2^(11-1)-1）
-
-  Mantissa：52 位，二进制科学计数法中的小数部分
+就这一个简单的rpc框架就完成了。有什么问题可以QQ联系交流。（787324413）
