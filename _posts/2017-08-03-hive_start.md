@@ -36,157 +36,51 @@ $hadoop fs -put /Users/mrlevo/Desktop/project/163music/music_data  /test/music/
 $hadoop fs -ls /test/music/
 -rw-r--r--   1 mac supergroup    2827582 2017-07-07 15:03 /test/music/music_data
 
-# music_data里面的文件是这样的,这里把个人信息抹掉了
+# music_data里面的文件是这样的
 $ hadoop fs -cat /test/music/music_data | more
-xxx|9|让音乐串起你我|云南省|文山壮族苗族自治州|75后|新浪微博|482|2002|326|http://music.163.com/#/user/fans?id=xx
-xx|8|None|云南省|曲靖市|75后|None|0|12|4|http://music.163.com/user/fans?id=xx
-xx|8|百年云烟只过眼，不为繁华易素心|贵州省|贵阳市|85后|None|1|22|1|http://music.163.com/user/fans?id=xx
+xxx|9|让音乐串起你我|云南省|文山壮族苗族自治州|75后|新浪微博|482|2002|326
+xx|8|None|云南省|曲靖市|75后|None|0|12|4
+xx|8|百年云烟只过眼，不为繁华易素心|贵州省|贵阳市|85后|None|1|22|1
 ```
-
-首先项目框架如下图
-
-![screenshot home](https://swaiter.github.io/images/posts/java/home.png)
-
-### 订单查询（service模块）
-直接调用rpc方法，获取productService实现对象，这个对象通过动态代理的方式获取，如果想了解动态代理和反射知识点，可以参考我的另外两个开源的源码地址
-
-[我的git地址 https://github.com/SWaiter/proxy.git](https://github.com/SWaiter/proxy.git)
-[我的git地址 https://github.com/SWaiter/reflect.git](https://github.com/SWaiter/reflect.git)
-
-rpc的实现在api模块中
-```java
-public class Main {
-    public static void main(String[] args) {
-        IProductService productService = (IProductService) com.yoozoo.api.Main.rpc(IProductService.class);
-        Product product = productService.queryById(1025);
-        System.out.println(product);
-    }
-}
-```
-
-### 商品服务（api模块）
-1、首先是bean
-
-```java
-   public class Product implements Serializable{
-       private long id;
-       private String name;
-       private double price;
-       //省去set、get 、tostring 方法
-       }
-
-```
-2、定义查询接口
-```java
-public interface IProductService {
-    public Product queryById(long id);
-}
-```
-3、接口实现
-
-```java
-public class ProductService implements IProductService{
-    @Override
-    public Product queryById(long id) {
-        Product product = new Product();
-        product.setId(id);
-        product.setName("wangshan");
-        product.setPrice(12211.2125);
-        return product;
-    }
-}
-```
-4、rpc方法实现
-```java
-public static Object rpc(final Class iProductServiceClass) {
-        return Proxy.newProxyInstance(iProductServiceClass.getClassLoader(), new Class[]{iProductServiceClass}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Socket socket = new Socket("127.0.0.1", 19088);
-
-                String apiClassName = iProductServiceClass.getName();
-                String methodName = method.getName();
-                Class[] parameterTypes = method.getParameterTypes();
-
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                objectOutputStream.writeUTF(apiClassName);
-                objectOutputStream.writeUTF(methodName);
-                objectOutputStream.writeObject(parameterTypes);
-                objectOutputStream.writeObject(args);
-                objectOutputStream.flush();
-
-                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-                Object o = objectInputStream.readObject();
-                objectInputStream.close();
-                objectOutputStream.close();
-
-                socket.close();
-                return o;
-            }
-        });
-    }
-
-```
-5、rpc启动
-
-```java
-public static void main(String[] args) {
-            try {
-                ServerSocket serverSocket = new ServerSocket(19088);
-                while (true) {
-                    Socket socket = serverSocket.accept();
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-    
-                    String apiClassName = objectInputStream.readUTF();
-                    String methodName = objectInputStream.readUTF();
-                    Class[] parameterTypes = (Class[]) objectInputStream.readObject();
-                    Object[] args4method = (Object[]) objectInputStream.readObject();
-    
-                    Class clazz = null;
-    
-                    if (apiClassName.equals(IProductService.class.getName())) {
-                        clazz = ProductService.class;
-                    }
-                    Method method = clazz.getMethod(methodName, parameterTypes);
-                    Object invoke = method.invoke(clazz.newInstance(), args4method);
-    
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    objectOutputStream.writeObject(invoke);
-                    objectOutputStream.flush();
-    
-                    objectInputStream.close();
-                    objectOutputStream.close();
-                    socket.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-```
-
-### 启动
-1、首先启动api中的service中的Main.main方法  
-2、然后启动service中的Main.main方法  
-3、就可以获取服务对象
+#### 4.建表
+然后再直接建hive表并关联数据
 ```bash
-com.intellij.rt.execution.application.AppMain com.yoozoo.service.Main
-Product{id=1025, name='wangshan', price=12211.2125}
-Process finished with exit code 0
+hive> create external table test.163music(   //建立外表，选择的数据库是test，表是163music
+    nickname string,
+    stage string,
+    introduce string,
+    province string,
+    city string,
+    age string,
+    social string,
+    trends string,
+    follow string,
+    fans string,
+    homepage string)   //这里是列名
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'   //这里是关联进表里面的数据的分隔符
+    LOCATION '/test/music/';    //这里location 选择的是hdfs的路径，比如我把我文件放在hdfs路径是/test/music/
+```
+如果是内表的话，会默认url，内表和外表有一定的区别，对外表进行drop，其对应的文件保留。
+###5.查看数据
+```hql
+select * from test.163music limit 1;
+```
+###6.查看表结构
+```hql
+desc test.163music;
+```
+结果是：
+```hql
+nickname                string
+stage                   string
+introduce               string
+province                string
+city                    string
+age                     string
+social                  string
+trends                  string
+follow                  string
+fans                    string
+homepage                string
 ```
 
-###项目地址
-
-```bash
-https://github.com/SWaiter/RPC.git
-```
-
-[我的git地址 https://github.com/SWaiter/RPC.git](https://github.com/SWaiter/RPC.git)
-
-
-###总结
-
-就这一个简单的rpc框架就完成了。有什么问题可以QQ联系交流。（787324413）
