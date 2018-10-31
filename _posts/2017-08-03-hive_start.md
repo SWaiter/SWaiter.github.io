@@ -9,8 +9,12 @@ keywords: hive、table、db、join
 在实际后台服务开发中，RPC框架具有很大的优势，其中当前dubbo已经受到大家的关注和认可，现在开始进行手动码一个简单的RPC框架。
 ### hive简介
 
-```bash
-hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供完整的sql查询功能，可以将sql语句转换为MapReduce任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。
+```hql
+hive是基于Hadoop的一个数据仓库工具，
+可以将结构化的数据文件映射为一张数据库表，并提供完整的sql查询功能，
+可以将sql语句转换为MapReduce任务进行运行。其优点是学习成本低，
+可以通过类SQL语句快速实现简单的MapReduce统计，
+不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。
 ```
 
 [官方地址](https://hive.apache.org/)
