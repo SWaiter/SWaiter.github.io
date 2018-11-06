@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3440edf5-dc56-4c87-a629-c4130e9a6b25" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/posts/java/hashmap.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_wiki/mysql.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_wiki/并发and并行.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_wiki/dbs.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -310,19 +310,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_wiki/base.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="297">
-                <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tcp.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_wiki/tcp.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -340,8 +327,8 @@
         <entry file="file://$PROJECT_DIR$/_wiki/mysql.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="1221">
-                <caret line="37" column="2" lean-forward="false" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
+              <first_editor relative-caret-position="298">
+                <caret line="30" column="18" lean-forward="false" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -349,24 +336,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add-brace.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/images/posts/java/add-brace.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hash_structor.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/images/posts/java/hash_structor.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home.png" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/images/posts/java/home.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="并发and并行.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_wiki/并发and并行.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="297">
+                <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
           </provider>
         </entry>
       </file>
@@ -424,6 +403,7 @@
         <option value="$PROJECT_DIR$/_posts/2018-02-21-linux.md" />
         <option value="$PROJECT_DIR$/_wiki/tcp.md" />
         <option value="$PROJECT_DIR$/_wiki/mysql.md" />
+        <option value="$PROJECT_DIR$/_wiki/并发and并行.md" />
       </list>
     </option>
   </component>
@@ -434,7 +414,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
+    <option name="x" value="1983" />
+    <option name="y" value="63" />
     <option name="width" value="1932" />
     <option name="height" value="1047" />
   </component>
@@ -454,6 +435,8 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -646,8 +629,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -669,14 +650,14 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\mygit\SWaiter.github.io\images\posts\java" />
-      <recent name="D:\mygit\SWaiter.github.io\images\wiki" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\mygit\SWaiter.github.io\_wiki" />
       <recent name="D:\mygit\SWaiter.github.io\_posts" />
       <recent name="D:\mygit\SWaiter.github.io\assets\images\screenshots" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\mygit\SWaiter.github.io\images\posts\java" />
+      <recent name="D:\mygit\SWaiter.github.io\images\wiki" />
     </key>
   </component>
   <component name="RunManager">
@@ -1097,14 +1078,8 @@
       <workItem from="1539770978679" duration="6506000" />
       <workItem from="1540870680778" duration="639000" />
       <workItem from="1540982578255" duration="8686000" />
-      <workItem from="1541144307408" duration="12000" />
-    </task>
-    <task id="LOCAL-00019" summary="add blog">
-      <created>1536629791845</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1536629791845</updated>
+      <workItem from="1541144307408" duration="317000" />
+      <workItem from="1541470472420" duration="245000" />
     </task>
     <task id="LOCAL-00020" summary="add blog">
       <created>1536924677697</created>
@@ -1442,14 +1417,21 @@
       <option name="project" value="LOCAL" />
       <updated>1541053164414</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="add blog">
+      <created>1541144324630</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1541144324630</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45056000" />
+    <option name="totallyTimeSpent" value="45606000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1932" height="1047" extended-state="0" />
+    <frame x="1983" y="63" width="1932" height="1047" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="JSON Formatter" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1477,7 +1459,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20238096" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16079059" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16239317" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1538,18 +1520,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/search_data.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-632">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/blog/3w-programmer.jpeg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/images/blog/1024-gold.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1600,7 +1570,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="330">
             <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -1626,7 +1595,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="2541">
             <caret line="77" column="5" lean-forward="false" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -1642,7 +1610,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="264">
             <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -1907,7 +1874,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="297">
             <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -1924,27 +1890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_wiki/mysql.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="1221">
-            <caret line="37" column="2" lean-forward="false" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/posts/java/add-brace.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/posts/java/hash_structor.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/images/posts/java/rpc-框架图.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1958,6 +1903,46 @@
     <entry file="file://$PROJECT_DIR$/images/posts/java/home.png">
       <provider selected="true" editor-type-id="images">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/posts/java/hash_structor.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/posts/java/add-brace.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_wiki/mysql.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="298">
+            <caret line="30" column="18" lean-forward="false" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_wiki/dbs.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_wiki/并发and并行.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="297">
+            <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
       </provider>
     </entry>
   </component>
