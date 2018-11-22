@@ -122,7 +122,7 @@ select DATE_SUB(now(),INTERVAL 7 day)
 - 实例
 ```mysql
 -- INSERT INTO 表名称 VALUES (值1, 值2,....)
--- 指定插入的列
+-- 指定插入的列  
 -- INSERT INTO table_name (列1, 列2,...) VALUES (值1, 值2,....)
 INSERT INTO Persons VALUES ('Gates', 'Bill', 'Xuanwumen 10', 'Beijing')
 
@@ -141,3 +141,4 @@ UPDATE Person SET FirstName = 'Fred' WHERE LastName = 'Wilson'
 DELETE FROM Person WHERE LastName = 'Wilson' 
 
 ```
+## 其他函数
