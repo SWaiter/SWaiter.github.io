@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Axure
+title: mysql归纳
 categories: tools
-description: Axure RP 快捷键和使用技巧
-keywords: Axure RP
+description: mysql归纳
+keywords: mysql
 ---
 ## 快捷键
 
