@@ -11,4 +11,5 @@ Gemfile.lock
 *.iws
 *.iml
 *.ipr
+*.xml
 
