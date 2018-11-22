@@ -1,5 +1,5 @@
 ---
-layout: wiki
+layout: post
 title: Win/Linux-端口占用
 categories: Linux
 description: 查看端口占用的方式

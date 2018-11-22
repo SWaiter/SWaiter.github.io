@@ -1,5 +1,5 @@
 ---
-layout: wiki
+layout: post
 title: IntelliJ IDEA
 categories: Tools
 description: 最好用的 Java IDE
