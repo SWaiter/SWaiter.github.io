@@ -5,3 +5,10 @@ _site/
 *~
 .DS_Store
 Gemfile.lock
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
