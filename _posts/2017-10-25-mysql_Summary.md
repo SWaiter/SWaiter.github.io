@@ -127,6 +127,7 @@ select DATE_SUB(now(),INTERVAL 7 day)
 INSERT INTO Persons VALUES ('Gates', 'Bill', 'Xuanwumen 10', 'Beijing')
 
 ```
+
 ### Update
 - 实例
 ```mysql
@@ -142,3 +143,4 @@ DELETE FROM Person WHERE LastName = 'Wilson'
 
 ```
 ## 其他函数
+
