@@ -13,7 +13,6 @@ keywords: mysql
 
 
 
-
 - 涉及的函数
 ```mysql
 date_format(date, format) 函数，MySQL日期格式化函数date_format()
