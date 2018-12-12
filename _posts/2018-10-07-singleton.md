@@ -13,6 +13,30 @@ keywords: shell
 - 由于 new 操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻 GC 压力，缩短 GC 停顿时间。
 
 ### 创建方式
+#### 懒汉式(双重检查加锁版本)
+```java
+public class Singleton {
+
+    //volatile保证，当uniqueInstance变量被初始化成Singleton实例时，多个线程可以正确处理uniqueInstance变量
+    private volatile static Singleton uniqueInstance;
+    private Singleton() {
+    }
+    public static Singleton getInstance() {
+       //检查实例，如果不存在，就进入同步代码块
+        if (uniqueInstance == null) {
+            //只有第一次才彻底执行这里的代码
+            synchronized(Singleton.class) {
+               //进入同步代码块后，再检查一次，如果仍是null，才创建实例
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Singleton();
+                }
+            }
+        }
+        return uniqueInstance;
+    }
+}
+```
+#### 静态内部类方式
 
 报错信息：*.sh: /bin/sh^M: bad interpreter: No such file or directory，根据报错提示查找 /bin/sh文件，有啊，这个没问题了，然后修改文件，把 /bin/sh 改成 /bin/bash，反复修改了两次，依然不行。然后参考其他的类似脚本也基本一致，就复制了下第一行，并粘到上传的脚本第一行位置，再次运行，还是报错，应该可以用文本处理三剑客搞定，然后网上查了下解决办法，使用 dos2unix命令转换编码格式即可，
 
