@@ -1,0 +1,28 @@
+---
+layout: post
+title: 单例模式
+categories: swaiter
+description: 单例模式
+keywords: shell
+---
+
+执行脚本出现 /bin/sh^M: bad interpreter: No such file or directory 报错
+
+报错信息：*.sh: /bin/sh^M: bad interpreter: No such file or directory，根据报错提示查找 /bin/sh文件，有啊，这个没问题了，然后修改文件，把 /bin/sh 改成 /bin/bash，反复修改了两次，依然不行。然后参考其他的类似脚本也基本一致，就复制了下第一行，并粘到上传的脚本第一行位置，再次运行，还是报错，应该可以用文本处理三剑客搞定，然后网上查了下解决办法，使用 dos2unix命令转换编码格式即可，
+
+
+使用以下方式生效
+可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的
+1.vim filename
+然后用命令 :set ff? 
+可以看到dos或unix的字样. 如果的确是dos格式的, 那么你可以用set ff=unix把它强制为unix格式的, 然后存盘退出. 再运行一遍看.
+2.可以用执行dos2unix 命令转换编码 
+
+```bash
+# dos2unix myshell.sh
+```
+
+3..也可以用sed 这样的工具来做: sed 's/^M//' filename > tmp_filename mv -f tmp_filename filename 来做 特别说明:^M并不是按键shift + 6产生的^和字母M, 它是一个字符, 其ASCII是0x0D, 生成它的办法是先按CTRL+V, 然后再回车(或CTRL+M)关于^M
+
+new line of DOS/Windows
+new line of dos/win: 0X0d0a new line of linux/unix: 0X0a
