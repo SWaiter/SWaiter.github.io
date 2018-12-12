@@ -37,6 +37,9 @@ public class Singleton {
 }
 ```
 #### 静态内部类方式
+静态内部实现的单例是懒加载的且线程安全。
+
+只有通过显式调用 getInstance 方法时，才会显式装载 SingletonHolder 类，从而实例化 instance（只有第一次使用这个单例的实例的时候才加载，同时不会有线程安全问题）。
 
 报错信息：*.sh: /bin/sh^M: bad interpreter: No such file or directory，根据报错提示查找 /bin/sh文件，有啊，这个没问题了，然后修改文件，把 /bin/sh 改成 /bin/bash，反复修改了两次，依然不行。然后参考其他的类似脚本也基本一致，就复制了下第一行，并粘到上传的脚本第一行位置，再次运行，还是报错，应该可以用文本处理三剑客搞定，然后网上查了下解决办法，使用 dos2unix命令转换编码格式即可，
 
