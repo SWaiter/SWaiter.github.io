@@ -6,9 +6,60 @@ description: SpringContextHolder 静态持有SpringContext的引用
 keywords: ApplicationContextAware 
 ---
 SpringContextHolder 静态持有SpringContext的引用 
+```java
+package com.test.quartz;
 
-报错信息：*.sh: /bin/sh^M: bad interpreter: No such file or directory，根据报错提示查找 /bin/sh文件，有啊，这个没问题了，然后修改文件，把 /bin/sh 改成 /bin/bash，反复修改了两次，依然不行。然后参考其他的类似脚本也基本一致，就复制了下第一行，并粘到上传的脚本第一行位置，再次运行，还是报错，应该可以用文本处理三剑客搞定，然后网上查了下解决办法，使用 dos2unix命令转换编码格式即可，
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
+/**
+ *
+ * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
+ * 
+ */
+
+public class SpringContextHolder implements ApplicationContextAware {
+
+	private static ApplicationContext applicationContext;
+
+	// 实现ApplicationContextAware接口的context注入函数, 将其存入静态变量.
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		SpringContextHolder.applicationContext = applicationContext;
+
+	}
+
+	// 取得存储在静态变量中的ApplicationContext.
+	public static ApplicationContext getApplicationContext() {
+		checkApplicationContext();
+		return applicationContext;
+
+	}
+
+	// 从静态变量ApplicationContext中取得Bean, 自动转型为所赋值对象的类型.
+	@SuppressWarnings("unchecked")
+	public static <T> T getBean(String name) {
+		checkApplicationContext();
+		return (T) applicationContext.getBean(name);
+
+	}
+
+	// 从静态变量ApplicationContext中取得Bean, 自动转型为所赋值对象的类型.
+	// 如果有多个Bean符合Class, 取出第一个.
+	@SuppressWarnings("unchecked")
+	public static <T> T getBean(Class<T> clazz) {
+		checkApplicationContext();
+		return (T) applicationContext.getBeansOfType(clazz);
+	
+	}
+
+	private static void checkApplicationContext() {
+		if (applicationContext == null) {
+			throw new IllegalStateException("applicaitonContext未注入,请在applicationContext.xml中定义SpringContextHolder");
+		}
+	}
+
+}
+```
 
 使用以下方式生效
 可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的
