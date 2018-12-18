@@ -60,19 +60,64 @@ public class SpringContextHolder implements ApplicationContextAware {
 
 }
 ```
-
-使用以下方式生效
-可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的
-1.vim filename
-然后用命令 :set ff? 
-可以看到dos或unix的字样. 如果的确是dos格式的, 那么你可以用set ff=unix把它强制为unix格式的, 然后存盘退出. 再运行一遍看.
-2.可以用执行dos2unix 命令转换编码 
+<!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring bean对象 --> 
 
 ```bash
-# dos2unix myshell.sh
+<bean class="com.xxxxx.SpringContextHolder"  />
+```
+该工具类主要用于：那些没有归入spring框架管理的类却要调用spring容器中的bean提供的工具类。
+
+在spring中要通过IOC依赖注入来取得对应的对象，但是该类通过实现ApplicationContextAware接口，以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
+
+如此就不能说说org.springframework.context.ApplicationContextAware这个接口了：
+
+当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有bean。换句话说，就是这个类可以直接获取spring配置文件中，所有有引用到的bean对象。
+
+除了以上SpringContextHolder类之外，还有不需要多次加载spring配置文件就可以取得bean的类：
+ 
+
+1.Struts2框架中，在监听器中有这么一句
+```java
+ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
+```
+之后可以用
+
+```java
+scheduleService = (IScheduleService)context.getBean("scheduleService");
+```
+取到对象，请问context都可以取到什么信息，这些信息的来源在哪？是XML里配置了呢，还是固定的一部分信息呢？
+2、这个 application封装的是web.xml 内部的信息
+而你的web.xml里面有spring的配置文件，所有，里面还包含spring的信息
+同样包含struts2的filter信息
+总之就是和web.xml有关系的所有信息
+
+3、在web.xml里有这么一段
+```java
+<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext*.xml</param-value>
+    </context-param>
 ```
 
-3..也可以用sed 这样的工具来做: sed 's/^M//' filename > tmp_filename mv -f tmp_filename filename 来做 特别说明:^M并不是按键shift + 6产生的^和字母M, 它是一个字符, 其ASCII是0x0D, 生成它的办法是先按CTRL+V, 然后再回车(或CTRL+M)关于^M
+那么在取信息的时候，也会把applicationContext.xml里的信息取出来
 
-new line of DOS/Windows
-new line of dos/win: 0X0d0a new line of linux/unix: 0X0a
+使用方式
+
+```java
+/**
+ * Hello world!
+ */
+public class App {
+	public static void main(String[] args) {
+		
+		System.out.println("加载spring");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "classpath:spring/spring-context.xml"});
+		context.start();
+		
+		SpringContextHolder springContextHolder = new SpringContextHolder();
+		springContextHolder.setApplicationContext(context);
+		//SpringContextHolder.getBean("queryDealService");
+		System.out.println("Hello World!");
+	}
+}
+```
