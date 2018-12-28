@@ -41,11 +41,41 @@ $hadoop fs -ls /test/music/
 -rw-r--r--   1 mac supergroup    2827582 2017-07-07 15:03 /test/music/music_data
 
 # music_data里面的文件是这样的
+
 $ hadoop fs -cat /test/music/music_data | more
 xxx|9|让音乐串起你我|云南省|文山壮族苗族自治州|75后|新浪微博|482|2002|326
 xx|8|None|云南省|曲靖市|75后|None|0|12|4
 xx|8|百年云烟只过眼，不为繁华易素心|贵州省|贵阳市|85后|None|1|22|1
 ```
+```bash
+# 文件大小
+$ hadoop fs -du /t_user/my_hive_db/my_hive_table_test01
+17/10/15 12:14:54 INFO hdfs.PeerCache: SocketCache disabled.
+282171728  /t_user/my_hive_db/my_hive_table_test01/000000_0
+281446475  /t_user/my_hive_db/my_hive_table_test01/000001_0
+281021562  /t_user/my_hive_db/my_hive_table_test01/000002_0
+280834172  /t_user/my_hive_db/my_hive_table_test01/000003_0
+280411919  /t_user/my_hive_db/my_hive_table_test01/000004_0
+279749295  /t_user/my_hive_db/my_hive_table_test01/000005_0
+
+$ hadoop fs -du -h /t_user/my_hive_db/my_hive_table_test01
+17/10/15 12:17:05 INFO hdfs.PeerCache: SocketCache disabled.
+269.1 M  /t_user/my_hive_db/my_hive_table_test01/000000_0
+268.4 M  /t_user/my_hive_db/my_hive_table_test01/000001_0
+268.0 M  /t_user/my_hive_db/my_hive_table_test01/000002_0
+267.8 M  /t_user/my_hive_db/my_hive_table_test01/000003_0
+267.4 M  /t_user/my_hive_db/my_hive_table_test01/000004_0
+266.8 M  /t_user/my_hive_db/my_hive_table_test01/000005_0
+
+$ hadoop fs -du -s /t_user/my_hive_db/my_hive_table_test01
+17/10/15 12:16:52 INFO hdfs.PeerCache: SocketCache disabled.
+29959873142  /t_user/my_hive_db/my_hive_table_test01
+
+$ hadoop fs -du -s -h /t_user/my_hive_db/my_hive_table_test01
+17/10/15 12:17:17 INFO hdfs.PeerCache: SocketCache disabled.
+27.9 G  /t_user/my_hive_db/my_hive_table_test01
+```
+
 #### 4.建表
 然后再直接建hive表并关联数据
 ```bash
